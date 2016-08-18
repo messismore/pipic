@@ -21,7 +21,7 @@ class timelapse:
             Set to 0 for no maximum.
         `maxshots` : Maximum number of pictures to take.  Set to 0 for no maximum.
         `targetBrightness` : Desired brightness of images, on a scale of 0 to 255.
-        `maxdelta` : Allowed variance from target brightness.  Discards images that 
+        `maxdelta` : Allowed variance from target brightness.  Discards images that
             are more than `maxdelta` from `targetBrightness`.  Set to 256 to keep
             all images.
         `iso` : ISO used for all images.
@@ -342,9 +342,9 @@ def main(argv):
     TL = timelapse(w=args.width, h=args.height, interval=args.interval, maxshots=args.maxshots, maxtime=args.maxtime, targetBrightness=args.brightness, maxdelta=args.delta, iso=args.iso)
 
     try:
-        os.listdir('/home/pi/pictures')
+        os.listdir('/media/Usb-Drive/Timelapse')
     except:
-        os.mkdir('/home/pi/pictures')
+        os.mkdir('/media/Usb-Drive/Timelapse')
 
     if args.listen:
         TL.listen()
