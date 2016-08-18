@@ -8,6 +8,7 @@ import math
 import zmq
 import io, picamera
 from fractions import Fraction
+from datetime import datetime
 
 class timelapse:
     """
@@ -275,7 +276,7 @@ class timelapse:
             self.socket.send(command)
 
             #Take a picture.
-            filename='/home/pi/pictures/'+self.hostname+'_'+dtime+'.jpg'
+            filename='/media/Usb-Drive/Timelapse/{:%Y-%m-%d-%H-%M}.jpg'.format(datetime.now())
             self.shoot(filename=filename)
 
             loopend=time.time()
