@@ -300,11 +300,6 @@ def main(argv):
     except:
         os.mkdir('/media/Usb-Drive/Timelapse')
 
-    if args.listen:
-        TL.listen()
-    else:
-        TL.timelapser()
-
     return True
 
 #-------------------------------------------------------------------------------
