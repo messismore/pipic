@@ -5,7 +5,6 @@ import os, sys, argparse
 import subprocess
 import time
 import math
-import zmq
 import io, picamera
 from fractions import Fraction
 from datetime import datetime
@@ -63,11 +62,6 @@ class timelapse:
         #metersite is one of 'c', 'a', 'l', or 'r', for center, all, left or right.
         #Chooses a region of the image to use for brightness measurements.
         self.metersite='c'
-
-        f=open('/etc/hostname')
-        hostname=f.read().strip().replace(' ','')
-        f.close()
-        self.hostname=hostname
 
         #Setting the maxss under one second prevents flipping into a slower camera mode.
         #self.maxss=1500000
@@ -262,18 +256,12 @@ class timelapse:
         start_time=time.time()
         elapsed=time.time()-start_time
 
-        #Set up broadcast for zmq.
-        self.context = zmq.Context()
-        self.socket = self.context.socket(zmq.PUB)
-        self.socket.bind("tcp://*:5556")
-
         while (elapsed<self.maxtime or self.maxtime==-1) and (self.shots_taken<self.maxshots or self.maxshots==-1):
             loopstart=time.time()
             dtime=subprocess.check_output(['date', '+%y%m%d_%T']).strip()
             dtime=dtime.replace(':', '.')
             #Broadcast options for this picture on zmq.
             command='0 shoot {} {} {} {}'.format(self.w, self.h, self.currentss, dtime)
-            self.socket.send(command)
 
             #Take a picture.
             filename='/media/Usb-Drive/Timelapse/{:%Y-%m-%d-%H-%M}.jpg'.format(datetime.now())
@@ -285,40 +273,6 @@ class timelapse:
 
             #Wait for next shot.
             time.sleep(max([0,self.interval-(loopend-loopstart)]))
-
-        self.socket.close()
-
-    def listen(self):
-        """
-        Run the timelapser in listen mode.  Listens for ZMQ messages and shoots
-        accordingly.
-        """
-        #  Socket to talk to server
-        context = zmq.Context()
-        socket = context.socket(zmq.SUB)
-        socket.connect("tcp://192.168.0.1:5556")
-        channel = "0"
-        socket.setsockopt(zmq.SUBSCRIBE, channel)
-
-        #Get hostname
-        f=open('/etc/hostname')
-        hostname=f.read().strip().replace(' ','')
-        f.close()
-
-        while True:
-            command = socket.recv()
-            command=command.split(" ")
-            print "Message recieved: " + str(command)
-            if command[1]=="quit":
-                break
-            elif command[1]=="shoot":
-                [ch,com,w,h,ss,iso,dtime]=command
-                filename='/home/pi/pictures/'+hostname+'_'+dtime+'.jpg'
-                self.shoot(filename)
-                print 'SS: ', self.currentss, '\tISO: ', self.currentiso, '\t', self.lastbr, '\t', self.shots_taken
-
-        socket.close()
-        return True
 
 
 #-------------------------------------------------------------------------------
@@ -336,7 +290,6 @@ def main(argv):
     parser.add_argument( '-b', '--brightness', default=128, type=int, help='Target average brightness of image, on a scale of 1 to 255.\nDefault is 128.' )
     parser.add_argument( '-d', '--delta', default=128, type=int, help='Maximum allowed distance of photo brightness from target brightness; discards photos too far from the target.  This is useful for autmatically discarding late-night shots.\nDefault is 128; Set to 256 to keep all images.' )
     parser.add_argument( '-m', '--metering', default='a', type=str, choices=['a','c','l','r'], help='Where to average brightness for brightness calculations.\n"a" measures the whole image, "c" uses a window at the center, "l" meters a strip at the left, "r" uses a strip at the right.' )
-    parser.add_argument( '-L', '--listen', action='store_true', help='Sets the timelapser to listen mode; listens for a master timelapser to tell it when to shoot.' )
     parser.add_argument( '-I', '--iso', default=100, type=int, help='Set ISO.' )
 
     args=parser.parse_args()
