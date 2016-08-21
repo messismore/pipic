@@ -285,19 +285,15 @@ def main(argv):
 
 
     parser = argparse.ArgumentParser(description='Timelapse tool for the Raspberry Pi.')
-    parser.add_argument('-W', '--width', default=1286, type=int, help='Set image width.' )
-    parser.add_argument('-H', '--height', default=972, type=int, help='Set image height.' )
-    parser.add_argument('-i', '--interval', default=15, type=int, help='Set photo interval in seconds.  \nRecommended miniumum is 6.' )
-    parser.add_argument('-t', '--maxtime', default=-1, type=int, help='Maximum duration of timelapse in minutes.\nDefault is -1, for no maximum duration.' )
-    parser.add_argument('-n', '--maxshots', default=-1, type=int, help='Maximum number of photos to take.\nDefault is -1, for no maximum.' )
-    parser.add_argument('-b', '--brightness', default=128, type=int, help='Target average brightness of image, on a scale of 1 to 255.\nDefault is 128.' )
-    parser.add_argument('-d', '--delta', default=128, type=int, help='Maximum allowed distance of photo brightness from target brightness; discards photos too far from the target.  This is useful for autmatically discarding late-night shots.\nDefault is 128; Set to 256 to keep all images.' )
-    parser.add_argument('-m', '--metering', default='a', type=str, choices=['a','c','l','r'], help='Where to average brightness for brightness calculations.\n"a" measures the whole image, "c" uses a window at the center, "l" meters a strip at the left, "r" uses a strip at the right.' )
-    parser.add_argument('-I', '--iso', default=100, type=int, help='Set ISO.' )
-    parser.add_argument('-c', '--colourbalance', default=timelapse.wb_gains,
-                        type=tuple, help=('Set white balance as tuple. '
-                                          'Eg. (Fraction(493, 256), '
-                                          'Fraction(387, 256))'))
+    parser.add_argument( '-W', '--width', default=1286, type=int, help='Set image width.' )
+    parser.add_argument( '-H', '--height', default=972, type=int, help='Set image height.' )
+    parser.add_argument( '-i', '--interval', default=15, type=int, help='Set photo interval in seconds.  \nRecommended miniumum is 6.' )
+    parser.add_argument( '-t', '--maxtime', default=-1, type=int, help='Maximum duration of timelapse in minutes.\nDefault is -1, for no maximum duration.' )
+    parser.add_argument( '-n', '--maxshots', default=-1, type=int, help='Maximum number of photos to take.\nDefault is -1, for no maximum.' )
+    parser.add_argument( '-b', '--brightness', default=128, type=int, help='Target average brightness of image, on a scale of 1 to 255.\nDefault is 128.' )
+    parser.add_argument( '-d', '--delta', default=128, type=int, help='Maximum allowed distance of photo brightness from target brightness; discards photos too far from the target.  This is useful for autmatically discarding late-night shots.\nDefault is 128; Set to 256 to keep all images.' )
+    parser.add_argument( '-m', '--metering', default='a', type=str, choices=['a','c','l','r'], help='Where to average brightness for brightness calculations.\n"a" measures the whole image, "c" uses a window at the center, "l" meters a strip at the left, "r" uses a strip at the right.' )
+    parser.add_argument( '-I', '--iso', default=100, type=int, help='Set ISO.' )
 
     args=parser.parse_args()
     TL = timelapse(w=args.width, h=args.height, interval=args.interval, maxshots=args.maxshots, maxtime=args.maxtime, targetBrightness=args.brightness, maxdelta=args.delta, iso=args.iso)
