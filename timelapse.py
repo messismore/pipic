@@ -89,6 +89,10 @@ class timelapse:
         self.camera.exposure_mode = 'off'
         self.wb_gains = self.camera.awb_gains
         print 'WB: ', self.wb_gains
+        print type(self.wb_gains)
+        file = open("whitebalance.txt", "w")
+        file.write(str(self.wb_gains))
+        file.close()
         self.camera.awb_mode = 'off'
         self.camera.awb_gains = self.wb_gains
 
