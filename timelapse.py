@@ -4,7 +4,6 @@ import Image
 import os, sys, argparse
 import subprocess
 import time
-import math
 import io, picamera
 from fractions import Fraction
 from datetime import datetime
