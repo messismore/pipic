@@ -89,7 +89,7 @@ class timelapse:
         self.currentss=self.camera.exposure_speed
         self.camera.exposure_mode = 'off'
 
-        if self.colourbalance not 'auto':
+        if self.colourbalance is not 'auto':
             self.wb_gains = self.camera.awb_gains
             print 'WB: ', self.wb_gains
             print type(self.wb_gains)
