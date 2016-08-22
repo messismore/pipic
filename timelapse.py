@@ -100,6 +100,7 @@ class timelapse:
             self.camera.awb_gains = self.wb_gains
         else:
             self.camera.awb_mode = 'off'
+            print type(tuple(self.colourbalance))
             self.camera.awb_gains = tuple(self.colourbalance)
             print 'WB: ', self.camera.awb_gains
 
