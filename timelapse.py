@@ -158,7 +158,7 @@ class timelapse:
         #Find an appropriate framerate.
         #For low shutter speeds, ths can considerably speed up the capture.
         FR=Fraction(9*1000000,10*self.currentss)
-        if FR>90: FR=90
+        if FR>15: FR=15
         if FR<0.1: FR=Fraction(1,10)
         self.camera.framerate=FR
 
