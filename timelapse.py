@@ -43,7 +43,8 @@ class timelapse:
         T.listen()
     """
     def __init__(self, w=1296, h=972, interval=15, maxtime=0, maxshots=0,
-                 targetBrightness=100, maxdelta=256, iso=100):
+                 targetBrightness=100, maxdelta=256, iso=100,
+                 colourbalance='auto'):
         self.camera=picamera.PiCamera()
         self.camera.framerate = 10
 
@@ -57,6 +58,7 @@ class timelapse:
         self.maxshots=maxshots
         self.targetBrightness=targetBrightness
         self.maxdelta=maxdelta
+        self.colourbalance=colourbalance
 
         #metersite is one of 'c', 'a', 'l', or 'r', for center, all, left or right.
         #Chooses a region of the image to use for brightness measurements.
@@ -86,14 +88,20 @@ class timelapse:
         self.camera.shutter_speed = self.camera.exposure_speed
         self.currentss=self.camera.exposure_speed
         self.camera.exposure_mode = 'off'
-        self.wb_gains = self.camera.awb_gains
-        print 'WB: ', self.wb_gains
-        print type(self.wb_gains)
-        file = open("whitebalance.txt", "w")
-        file.write(str(self.wb_gains))
-        file.close()
-        self.camera.awb_mode = 'off'
-        self.camera.awb_gains = self.wb_gains
+
+        if self.colourbalance not 'auto':
+            self.wb_gains = self.camera.awb_gains
+            print 'WB: ', self.wb_gains
+            print type(self.wb_gains)
+            file = open("whitebalance.txt", "w")
+            file.write(str(self.wb_gains))
+            file.close()
+            self.camera.awb_mode = 'off'
+            self.camera.awb_gains = self.wb_gains
+        else:
+            self.camera.awb_mode = 'off'
+            self.camera.awb_gains = tuple(self.colourbalance)
+            print 'WB: ', self.camera.awb_gains
 
         self.findinitialparams()
         print "Set up timelapser with: "
@@ -294,13 +302,16 @@ def main(argv):
     parser.add_argument('-d', '--delta', default=128, type=int, help='Maximum allowed distance of photo brightness from target brightness; discards photos too far from the target.  This is useful for autmatically discarding late-night shots.\nDefault is 128; Set to 256 to keep all images.' )
     parser.add_argument('-m', '--metering', default='a', type=str, choices=['a','c','l','r'], help='Where to average brightness for brightness calculations.\n"a" measures the whole image, "c" uses a window at the center, "l" meters a strip at the left, "r" uses a strip at the right.' )
     parser.add_argument('-I', '--iso', default=100, type=int, help='Set ISO.' )
-    parser.add_argument('-c', '--colourbalance', default=timelapse.wb_gains,
-                        type=tuple, help=('Set white balance as tuple. '
-                                          'Eg. (Fraction(493, 256), '
-                                          'Fraction(387, 256))'))
+    parser.add_argument('-c', '--colourbalance', default='auto', type=str,
+                        help=('Set white balance as tuple. '
+                              'Eg. (Fraction(493, 256), '
+                              'Fraction(387, 256))'))
 
     args=parser.parse_args()
-    TL = timelapse(w=args.width, h=args.height, interval=args.interval, maxshots=args.maxshots, maxtime=args.maxtime, targetBrightness=args.brightness, maxdelta=args.delta, iso=args.iso)
+    TL = timelapse(w=args.width, h=args.height, interval=args.interval,
+                   maxshots=args.maxshots, maxtime=args.maxtime,
+                   targetBrightness=args.brightness, maxdelta=args.delta,
+                   iso=args.iso, c=args.colourbalance)
 
     try:
         os.listdir('/media/Usb-Drive/Timelapse')
