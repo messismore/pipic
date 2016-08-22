@@ -311,7 +311,7 @@ def main(argv):
     TL = timelapse(w=args.width, h=args.height, interval=args.interval,
                    maxshots=args.maxshots, maxtime=args.maxtime,
                    targetBrightness=args.brightness, maxdelta=args.delta,
-                   iso=args.iso, c=args.colourbalance)
+                   iso=args.iso, colourbalance=args.colourbalance)
 
     try:
         os.listdir('/media/Usb-Drive/Timelapse')
