@@ -181,6 +181,7 @@ class timelapse:
         self.camera.capture(stream, format='jpeg')
         capend=time.time()
         print 'Exp: %d\tFR: %f\t Capture Time: %f' % (self.camera.exposure_speed, round(float(self.camera.framerate),2), round(capend-capstart,2) )
+        print 'ISO: ', self.iso
         # "Rewind" the stream to the beginning so we can read its content
         stream.seek(0)
         image = Image.open(stream)
