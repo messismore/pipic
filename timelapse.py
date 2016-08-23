@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from Pillow import Image
+import Image
 import os, sys, argparse
 import subprocess
 import time
