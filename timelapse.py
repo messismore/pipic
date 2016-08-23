@@ -251,7 +251,7 @@ class timelapse:
 
         #Dynamically adjust ss and iso.
         self.avgbr=sum(self.brData)/len(self.brData)
-        # self.dynamic_adjust()
+        self.dynamic_adjust()
         self.shots_taken+=1
         self.brindex=(self.brindex+1)%self.brightwidth
 
