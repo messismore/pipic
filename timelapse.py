@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import Image
+from Pillow import Image
 import os, sys, argparse
 import subprocess
 import time
@@ -75,7 +75,7 @@ class timelapse:
         self.brightwidth=20
         self.brData=[]
         self.brindex=0
-        self.lastbr=0
+        self.lastbr=self.targetBrightness
         self.avgbr=0
         self.shots_taken=0
 
@@ -241,7 +241,7 @@ class timelapse:
 
         if not ss_adjust: return None
 
-        self.lastbr=self.avgbrightness(im)
+        # self.lastbr=self.avgbrightness(im)
         print "avgbrightness: ", self.lastbr
         if len(self.brData)==self.brightwidth:
             self.brData[self.brindex%self.brightwidth]=self.lastbr
