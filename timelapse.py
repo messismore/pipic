@@ -242,6 +242,7 @@ class timelapse:
         if not ss_adjust: return None
 
         self.lastbr=self.avgbrightness(im)
+        print "avgbrightness: ", self.avgbrightness
         if len(self.brData)==self.brightwidth:
             self.brData[self.brindex%self.brightwidth]=self.lastbr
         else:
