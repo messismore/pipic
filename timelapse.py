@@ -260,6 +260,10 @@ class timelapse:
             self.shots_taken-=1
             os.remove(filename)
 
+        # Felix debug
+
+        print "avgbr: ", self.avgbr, "br: ", self.lastbr, "brData: ", self.brData
+
 
     def timelapser(self):
         """
