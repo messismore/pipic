@@ -90,6 +90,11 @@ class timelapse:
         self.camera.exposure_mode = 'off'
 
         if self.colourbalance is not 'auto':
+            self.camera.awb_mode = 'off'
+            print type(tuple(self.colourbalance))
+            self.camera.awb_gains = tuple(self.colourbalance)
+            print 'WB: ', self.camera.awb_gains
+        else:
             self.wb_gains = self.camera.awb_gains
             print 'WB: ', self.wb_gains
             print type(self.wb_gains)
@@ -98,11 +103,6 @@ class timelapse:
             file.close()
             self.camera.awb_mode = 'off'
             self.camera.awb_gains = self.wb_gains
-        else:
-            self.camera.awb_mode = 'off'
-            print type(tuple(self.colourbalance))
-            self.camera.awb_gains = tuple(self.colourbalance)
-            print 'WB: ', self.camera.awb_gains
 
         self.findinitialparams()
         print "Set up timelapser with: "
