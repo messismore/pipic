@@ -306,7 +306,7 @@ def main(argv):
     parser.add_argument('-I', '--iso', default=100, type=int, help='Set ISO.' )
     parser.add_argument('-c', '--colourbalance', default='auto', type=str,
                         help=('Set white balance as tuple of red and blue. '
-                              "Eg. ('493/256', '387/256')")
+                              'Eg. (\'493/256\', \'387/256\')')
 
     args=parser.parse_args()
     TL = timelapse(w=args.width, h=args.height, interval=args.interval,
