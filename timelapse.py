@@ -276,7 +276,7 @@ class timelapse:
             self.socket.send(command)
 
             #Take a picture.
-            filename='/media/Usb-Drive/Timelapse/{:%Y-%m-%d-%H-%M}.jpg'.format(datetime.now())
+            filename='/media/Usb-Drive/Timelapse/{:%Y-%m-%d-%H-%M-%S}.jpg'.format(datetime.now())
             self.shoot(filename=filename)
 
             loopend=time.time()
