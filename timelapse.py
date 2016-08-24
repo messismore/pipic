@@ -89,10 +89,11 @@ class timelapse:
         self.currentss=self.camera.exposure_speed
         self.camera.exposure_mode = 'off'
 
-        if self.colourbalance is not 'auto':
+        if self.colourbalance is not 'auto': # ('497/256','177/128')
             self.camera.awb_mode = 'off'
             print type(tuple(self.colourbalance))
-            self.camera.awb_gains = tuple(self.colourbalance)
+            self.camera.awb_gains = (Fraction(self.colourbalance[0]),
+                                     Fraction(self.colourbalance[1]))
             print 'WB: ', self.camera.awb_gains
         else:
             self.wb_gains = self.camera.awb_gains
@@ -304,9 +305,8 @@ def main(argv):
     parser.add_argument('-m', '--metering', default='a', type=str, choices=['a','c','l','r'], help='Where to average brightness for brightness calculations.\n"a" measures the whole image, "c" uses a window at the center, "l" meters a strip at the left, "r" uses a strip at the right.' )
     parser.add_argument('-I', '--iso', default=100, type=int, help='Set ISO.' )
     parser.add_argument('-c', '--colourbalance', default='auto', type=str,
-                        help=('Set white balance as tuple. '
-                              'Eg. (Fraction(493, 256), '
-                              'Fraction(387, 256))'))
+                        help=('Set white balance as tuple of red and blue. '
+                              'Eg. ('493/256', '387/256'))
 
     args=parser.parse_args()
     TL = timelapse(w=args.width, h=args.height, interval=args.interval,
