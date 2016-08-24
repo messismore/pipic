@@ -89,9 +89,9 @@ class timelapse:
         self.currentss=self.camera.exposure_speed
         self.camera.exposure_mode = 'off'
 
-        if self.colourbalance is not 'auto': # ('497/256','177/128')
+        if self.colourbalance is not ('auto'): # ('497/256','177/128')
             self.camera.awb_mode = 'off'
-            print type(tuple(self.colourbalance))
+            print type(self.colourbalance)
             self.camera.awb_gains = (Fraction(self.colourbalance[0]),
                                      Fraction(self.colourbalance[1]))
             print 'WB: ', self.camera.awb_gains
@@ -304,7 +304,7 @@ def main(argv):
     parser.add_argument('-d', '--delta', default=128, type=int, help='Maximum allowed distance of photo brightness from target brightness; discards photos too far from the target.  This is useful for autmatically discarding late-night shots.\nDefault is 128; Set to 256 to keep all images.' )
     parser.add_argument('-m', '--metering', default='a', type=str, choices=['a','c','l','r'], help='Where to average brightness for brightness calculations.\n"a" measures the whole image, "c" uses a window at the center, "l" meters a strip at the left, "r" uses a strip at the right.' )
     parser.add_argument('-I', '--iso', default=100, type=int, help='Set ISO.' )
-    parser.add_argument('-c', '--colourbalance', default='auto', type=tuple,
+    parser.add_argument('-c', '--colourbalance', default=('auto'), type=tuple,
                         help=('Set white balance as tuple of red and blue. '
                               'Eg. (\'493/256\', \'387/256\')')
 
