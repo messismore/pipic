@@ -94,10 +94,10 @@ class timelapse:
             rg, bg = (Fraction(self.colourbalance[0]),
                       Fraction(self.colourbalance[1]))
             self.camera.awb_gains = (rg, bg)
-            print 'WB: ', self.camera.awb_gains
+            print 'preset WB: ', self.camera.awb_gains
         else:
             self.wb_gains = self.camera.awb_gains
-            print 'WB: ', self.wb_gains
+            print 'auto WB: ', self.wb_gains
             print type(self.wb_gains)
             file = open("whitebalance.txt", "w")
             file.write(str(self.wb_gains))
