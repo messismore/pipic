@@ -15,6 +15,6 @@ currentss = camera.exposure_speed
 camera.exposure_mode = 'off'
 camera.resolution = (1920, 1080)
 camera.awb_mode = 'off'
-camera.awb_gains = (Fraction(497, 256), Fraction(177, 128))
+camera.awb_gains = (4, 4)
 
 print camera.awb_gains
