@@ -121,7 +121,7 @@ class timelapse:
         defined in `self.metersite`.  `im` should be a PIL image.
         """
         meter=self.metersite
-        aa=im.convert('L')
+        aa=im.convert('L') # convert to black and white
         (h,w)=aa.size
         if meter=='c':
             top=int(1.0*h/2-.15*h)+1
@@ -146,7 +146,7 @@ class timelapse:
         aa=aa.crop((left,top,right,bottom))
         pixels=(aa.size[0]*aa.size[1])
         h=aa.histogram()
-        mu0=1.0*sum([i*h[i] for i in range(len(h))])/pixels
+        mu0=1.0*sum([(i+1)*h[i] for i in range(len(h))])/pixels
         return round(mu0,2)
 
     def dynamic_adjust(self, gamma=0.2):
