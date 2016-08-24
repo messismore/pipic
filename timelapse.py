@@ -140,7 +140,6 @@ class timelapse:
         aa=aa.crop((left,top,right,bottom))
         pixels=(aa.size[0]*aa.size[1])
         h=aa.histogram()
-        print h
         mu0=1.0*sum([i*h[i] for i in range(len(h))])/pixels
         return round(mu0,2)
 
