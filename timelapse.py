@@ -91,11 +91,7 @@ class timelapse:
 
         if self.colourbalance is not 'auto':  # '497/256', '177/128'
             self.camera.awb_mode = 'off'
-            rg, bg = (Fraction(self.colourbalance[0]),
-                      Fraction(self.colourbalance[1]))
-            g = (rg, bg)
-            print type(g), g
-            self.camera.awb_gains = g
+            self.camera.awb_gains = Fraction(497, 256), Fraction(177, 128)
             print 'preset WB: ', self.camera.awb_gains
         else:
             self.wb_gains = self.camera.awb_gains
