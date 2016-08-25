@@ -148,7 +148,7 @@ class timelapse:
         mu0=1.0*sum([(i+1)*h[i] for i in range(len(h))])/pixels
         if sum(h[245:255]) > pixels * 0.05:
             print "Image overexposed! Adding penalty..."
-            mu0 = mu0 + 10
+            mu0 = mu0 + 50
         return round(mu0,2)
 
     def dynamic_adjust(self, gamma=0.2):
