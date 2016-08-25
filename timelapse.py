@@ -122,27 +122,27 @@ class timelapse:
         meter=self.metersite
         aa=im.convert('L') # convert to black and white
         (h,w)=aa.size
-        if meter=='c':
-            top=int(1.0*h/2-.15*h)+1
-            bottom=int(1.0*h/2+.15*h)-1
-            left=int(1.0*w/2-.15*w)+1
-            right=int(1.0*w/2+.15*w)+1
-        elif meter=='l':
-            top=int(1.0*h/2-.15*h)+1
-            bottom=int(1.0*h/2+.15*h)-1
-            left=0
-            right=int(.3*w)+2
-        elif meter=='r':
-            top=int(1.0*h/2-.15*h)+1
-            bottom=int(1.0*w/2+.15*w)-1
-            left=h-int(.3*w)-2
-            right=w
-        else:
-            top=0
-            bottom=h
-            left=0
-            right=w
-        aa=aa.crop((left,top,right,bottom))
+        # if meter=='c':
+        #     top=int(1.0*h/2-.15*h)+1
+        #     bottom=int(1.0*h/2+.15*h)-1
+        #     left=int(1.0*w/2-.15*w)+1
+        #     right=int(1.0*w/2+.15*w)+1
+        # elif meter=='l':
+        #     top=int(1.0*h/2-.15*h)+1
+        #     bottom=int(1.0*h/2+.15*h)-1
+        #     left=0
+        #     right=int(.3*w)+2
+        # elif meter=='r':
+        #     top=int(1.0*h/2-.15*h)+1
+        #     bottom=int(1.0*w/2+.15*w)-1
+        #     left=h-int(.3*w)-2
+        #     right=w
+        # else:
+        #     top=0
+        #     bottom=h
+        #     left=0
+        #     right=w
+        # aa=aa.crop((left,top,right,bottom))
         pixels=(aa.size[0]*aa.size[1])
         h=aa.histogram()
         print h
