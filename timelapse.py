@@ -122,6 +122,9 @@ class timelapse:
         meter=self.metersite
         aa=im.convert('L') # convert to black and white
         (h,w)=aa.size
+
+        # This seems to mess up historgram() to return garbled data
+        #
         # if meter=='c':
         #     top=int(1.0*h/2-.15*h)+1
         #     bottom=int(1.0*h/2+.15*h)-1
@@ -149,7 +152,8 @@ class timelapse:
         mu0=1.0*sum([(i+1)*h[i] for i in range(len(h))])/pixels
         if sum(h[245:255]) > pixels * 0.05:
             print "Image overexposed! Adding penalty..."
-            mu0 = mu0 + 50
+            mu0 = mu0 + 10
+            if mu0 > 255: mu0 = 255
         return round(mu0,2)
 
     def dynamic_adjust(self, gamma=0.2):
