@@ -243,7 +243,10 @@ class timelapse:
         im=self.capture()
         #Saves file without exif and raster data; reduces file size by 90%,
         if filename!=None:
-            im.save(filename)
+            try:
+                im.save(filename)
+            except:
+                os.mkdir('/media/Usb-Drive/Timelapse/{:%Y-%m-%d}'.format(datetime.now()))
 
         if not ss_adjust: return None
 
@@ -282,7 +285,7 @@ class timelapse:
             command='0 shoot {} {} {} {}'.format(self.w, self.h, self.currentss, dtime)
 
             #Take a picture.
-            filename='/media/Usb-Drive/Timelapse/{:%Y-%m-%d-%H-%M-%S}.jpg'.format(datetime.now())
+            filename='/media/Usb-Drive/Timelapse/{:%Y-%m-%d}/{:%Y-%m-%d-%H-%M-%S}.jpg'.format(datetime.now())
             self.shoot(filename=filename)
 
             loopend=time.time()
@@ -320,7 +323,7 @@ def main(argv):
                    iso=args.iso, colourbalance=args.colourbalance)
 
     try:
-        os.listdir('/media/Usb-Drive/Timelapse')
+        os.listdir('/media/Usb-Drive/Timelapse/')
     except:
         os.mkdir('/media/Usb-Drive/Timelapse')
 
