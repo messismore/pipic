@@ -91,7 +91,7 @@ class timelapse:
 
         if self.colourbalance is not 'auto':  # '497/256', '177/128'
             self.camera.awb_mode = 'off'
-            self.camera.awb_gains = Fraction(497, 256), Fraction(177, 128)
+            self.camera.awb_gains = Fraction(27, 16), Fraction(103, 64)
             print 'preset WB: ', self.camera.awb_gains
         else:
             self.wb_gains = self.camera.awb_gains
@@ -191,7 +191,7 @@ class timelapse:
         and ISO for taking photos of the desired brightness.
         """
         killtoken=False
-        self.camera.resolution = (64, 48)
+        self.camera.resolution = (1920, 1080)
         while abs(self.targetBrightness-self.lastbr)>4:
             im=self.capture()
             self.lastbr=self.avgbrightness(im)
