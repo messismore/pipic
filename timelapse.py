@@ -285,7 +285,7 @@ class timelapse:
             command='0 shoot {} {} {} {}'.format(self.w, self.h, self.currentss, dtime)
 
             #Take a picture.
-            filename='/media/Usb-Drive/Timelapse/{:%Y-%m-%d}/{:%Y-%m-%d-%H-%M-%S}.jpg'.format(datetime.now())
+            filename='/media/Usb-Drive/Timelapse/{:%Y-%m-%d/%Y-%m-%d-%H-%M-%S}.jpg'.format(datetime.now())
             self.shoot(filename=filename)
 
             loopend=time.time()
