@@ -42,7 +42,7 @@ class timelapse:
         T=timelapse()
         T.listen()
     """
-    def __init__(self, w=1296, h=972, interval=15, maxtime=0, maxshots=0,
+    def __init__(self, w=1920, h=1080, interval=15, maxtime=0, maxshots=0,
                  targetBrightness=100, maxdelta=256, iso=100,
                  colourbalance='auto'):
         self.camera=picamera.PiCamera()
@@ -303,8 +303,8 @@ def main(argv):
 
 
     parser = argparse.ArgumentParser(description='Timelapse tool for the Raspberry Pi.')
-    parser.add_argument('-W', '--width', default=1286, type=int, help='Set image width.' )
-    parser.add_argument('-H', '--height', default=972, type=int, help='Set image height.' )
+    parser.add_argument('-W', '--width', default=1920, type=int, help='Set image width.' )
+    parser.add_argument('-H', '--height', default=1080, type=int, help='Set image height.' )
     parser.add_argument('-i', '--interval', default=15, type=int, help='Set photo interval in seconds.  \nRecommended miniumum is 6.' )
     parser.add_argument('-t', '--maxtime', default=-1, type=int, help='Maximum duration of timelapse in minutes.\nDefault is -1, for no maximum duration.' )
     parser.add_argument('-n', '--maxshots', default=-1, type=int, help='Maximum number of photos to take.\nDefault is -1, for no maximum.' )
