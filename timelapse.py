@@ -44,7 +44,7 @@ class timelapse:
     """
     def __init__(self, w=1920, h=1080, interval=15, maxtime=0, maxshots=0,
                  targetBrightness=100, maxdelta=256, iso=100,
-                 colourbalance='auto'):
+                 colourbalance='auto', hdr=0):
         self.camera=picamera.PiCamera()
         self.camera.framerate = 10
 
@@ -59,6 +59,9 @@ class timelapse:
         self.targetBrightness=targetBrightness
         self.maxdelta=maxdelta
         self.colourbalance=colourbalance
+        # hdr can be set to an integer from 0 to 25. If > 0, two additional
+        # pictures will be taken, with hdr as exposure compensation
+        self.hdr=hdr
 
         #metersite is one of 'c', 'a', 'l', or 'r', for center, all, left or right.
         #Chooses a region of the image to use for brightness measurements.
@@ -192,6 +195,19 @@ class timelapse:
         image = Image.open(stream)
         return image
 
+    def capture_hdr(self):
+        """
+        Take an additional under- and overexposed image.
+        """
+        self.camera.exposure_compensation = -self.hdr
+        imunder = self.capture()
+        self.camera.exposure_compensation = self.hdr
+        imover = self.capture()
+        self.camera.exposure_compensation = 0
+
+        images = (imunder, imover)
+        return images
+
     def findinitialparams(self):
         """
         Take a number of small shots in succession to determine a shutterspeed
@@ -247,6 +263,11 @@ class timelapse:
                 im.save(filename)
             except:
                 os.mkdir('/media/Usb-Drive/Timelapse/{:%Y-%m-%d}'.format(datetime.now()))
+        if self.hdr != 0:
+            hdrims = self.capture_hdr()
+            filename = filename.replace('.jpg', '')
+            ims[0].save(filename + '_under.jpg')
+            ims[1].save(filename + '_over.jpg')
 
         if not ss_adjust: return None
 
@@ -311,16 +332,21 @@ def main(argv):
     parser.add_argument('-b', '--brightness', default=128, type=int, help='Target average brightness of image, on a scale of 1 to 255.\nDefault is 128.' )
     parser.add_argument('-d', '--delta', default=128, type=int, help='Maximum allowed distance of photo brightness from target brightness; discards photos too far from the target.  This is useful for autmatically discarding late-night shots.\nDefault is 128; Set to 256 to keep all images.' )
     parser.add_argument('-m', '--metering', default='a', type=str, choices=['a','c','l','r'], help='Where to average brightness for brightness calculations.\n"a" measures the whole image, "c" uses a window at the center, "l" meters a strip at the left, "r" uses a strip at the right.' )
-    parser.add_argument('-I', '--iso', default=100, type=int, help='Set ISO.' )
+    parser.add_argument('-I', '--iso', default=100, type=int, help='Set ISO.')
     parser.add_argument('-c', '--colourbalance', nargs=2, default='auto',
                         type=str, help='Set white balance as red and blue. '
-                                             '''Eg. \'493/256\' '387/256\' ''')
+                                       '''\nEg. \'493/256\' '387/256\' ''')
+    parser.add_argument('r', '--highdynamicrange', default=0, type=int,
+                        help='Take two additional images, one under-, one '
+                               'overexposed. \n Set this from 1 to 25,'
+                               'depending the desired difference in exposure')
 
     args=parser.parse_args()
     TL = timelapse(w=args.width, h=args.height, interval=args.interval,
                    maxshots=args.maxshots, maxtime=args.maxtime,
                    targetBrightness=args.brightness, maxdelta=args.delta,
-                   iso=args.iso, colourbalance=args.colourbalance)
+                   iso=args.iso, colourbalance=args.colourbalance,
+                   hdr=args.hdr)
 
     try:
         os.listdir('/media/Usb-Drive/Timelapse/')
