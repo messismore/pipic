@@ -148,10 +148,9 @@ class timelapse:
         # aa=aa.crop((left,top,right,bottom))
         pixels=(aa.size[0]*aa.size[1])
         h=aa.histogram()
-        print h
         mu0=1.0*sum([(i+1)*h[i] for i in range(len(h))])/pixels
         if sum(h[245:255]) > pixels * 0.05:
-            print "Image overexposed! Adding penalty..."
+            print (sum(h[245:255])*100/pixels)*100 "% of image overexposed! Adding penalty..."
             mu0 = mu0 + 10
             if mu0 > 255: mu0 = 255
         return round(mu0,2)
