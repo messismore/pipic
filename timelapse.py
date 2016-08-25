@@ -146,7 +146,8 @@ class timelapse:
         pixels=(aa.size[0]*aa.size[1])
         h=aa.histogram()
         mu0=1.0*sum([(i+1)*h[i] for i in range(len(h))])/pixels
-        if h[-1] > pixels * 0.1:
+        if h[-1] > pixels * 0.05:
+            print "Image overexposed! Adding penalty…"
             mu0 = mu0 + 10
         return round(mu0,2)
 
