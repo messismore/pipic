@@ -282,6 +282,10 @@ class timelapse:
                          filename + '_over.jpg']
 
             MergeHDRStack(filenames, filename + '_HDR.jpg')
+            try:
+                file.remove(filename + '_under.jpg', filename + '_over.jpg')
+            except:
+                pass
 
         if not ss_adjust: return None
 
