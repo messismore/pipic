@@ -281,11 +281,12 @@ class timelapse:
                          filename + '_under.jpg',
                          filename + '_over.jpg']
 
-            MergeHDRStack(filenames, filename + '_HDR.jpg')
+            MergeHDRStack(filenames, filename + '_HDRjpg')
             for x in filenames[1:]:
-                os.remove(x)
-            except OSError, e:
-                print ("Error: %s - %s." % (e.filename,e.strerror))
+                try:
+                    os.remove(x)
+                except OSError, e:
+                    print ("Error: %s - %s." % (e.filename,e.strerror))
 
         if not ss_adjust: return None
 
