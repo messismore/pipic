@@ -285,7 +285,7 @@ class timelapse:
             try:
                 os.remove(filename + '_under.jpg', filename + '_over.jpg')
             except:
-                pass
+                print "Unable to delete work files!"
 
         if not ss_adjust: return None
 
@@ -354,7 +354,7 @@ def main(argv):
     parser.add_argument('-c', '--colourbalance', nargs=2, default='auto',
                         type=str, help='Set white balance as red and blue. '
                                        '''\nEg. \'493/256\' '387/256\' ''')
-    parser.add_argument('-r', '--hdr', default=0, type=float,
+    parser.add_argument('-r', '--hdr', default=60, type=float,
                         help='Take two additional images, one under-, one '
                                'overexposed. \n Set this from 1 to 25,'
                                'depending the desired difference in exposure')
