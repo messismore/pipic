@@ -346,7 +346,7 @@ def main(argv):
                    maxshots=args.maxshots, maxtime=args.maxtime,
                    targetBrightness=args.brightness, maxdelta=args.delta,
                    iso=args.iso, colourbalance=args.colourbalance,
-                   hdr=args.hdr)
+                   highdynamicrange=args.hdr)
 
     try:
         os.listdir('/media/Usb-Drive/Timelapse/')
