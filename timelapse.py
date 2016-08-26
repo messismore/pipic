@@ -282,8 +282,8 @@ class timelapse:
                          filename + '_over.jpg']
 
             MergeHDRStack(filenames, filename + '_HDR.jpg')
-            try:
-                os.remove(filename + '_under.jpg', filename + '_over.jpg')
+            for x in filenames[1:]:
+                os.remove(x)
             except OSError, e:
                 print ("Error: %s - %s." % (e.filename,e.strerror))
 
