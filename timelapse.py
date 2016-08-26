@@ -336,7 +336,7 @@ def main(argv):
     parser.add_argument('-c', '--colourbalance', nargs=2, default='auto',
                         type=str, help='Set white balance as red and blue. '
                                        '''\nEg. \'493/256\' '387/256\' ''')
-    parser.add_argument('-r', '--highdynamicrange', default=0, type=int,
+    parser.add_argument('-r', '--hdr', default=0, type=int,
                         help='Take two additional images, one under-, one '
                                'overexposed. \n Set this from 1 to 25,'
                                'depending the desired difference in exposure')
@@ -346,7 +346,7 @@ def main(argv):
                    maxshots=args.maxshots, maxtime=args.maxtime,
                    targetBrightness=args.brightness, maxdelta=args.delta,
                    iso=args.iso, colourbalance=args.colourbalance,
-                   highdynamicrange=args.hdr)
+                   hdr=args.hdr)
 
     try:
         os.listdir('/media/Usb-Drive/Timelapse/')
