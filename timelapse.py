@@ -185,7 +185,7 @@ class timelapse:
         stream = io.BytesIO()
         self.camera.ISO=self.iso
         self.camera.shutter_speed=self.currentss
-        x=self.SSToFloat(self.currentss)
+        # x=self.SSToFloat(self.currentss)
         capstart=time.time()
         self.camera.capture(stream, format='jpeg')
         capend=time.time()
@@ -200,11 +200,16 @@ class timelapse:
         Take an additional under- and overexposed image.
         """
         compensation = self.currentss * (self.hdr/100)
+        Print self.currentss, (self.hdr/100)
         self.camera.shutter_speed = self.currentss - compensation
+        print self.camera.shutter_speed
         imunder = self.capture()
         self.camera.shutter_speed = self.currentss + compensation
+        print self.camera.shutter_speed
         imover = self.capture()
         self.camera.shutter_speed = self.currentss
+        print self.camera.shutter_speed
+
 
         images = (imunder, imover)
         return images
