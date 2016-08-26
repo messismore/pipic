@@ -264,7 +264,7 @@ class timelapse:
             except:
                 os.mkdir('/media/Usb-Drive/Timelapse/{:%Y-%m-%d}'.format(datetime.now()))
         if self.hdr != 0:
-            hdrims = self.capture_hdr()
+            ims = self.capture_hdr()
             filename = filename.replace('.jpg', '')
             ims[0].save(filename + '_under.jpg')
             ims[1].save(filename + '_over.jpg')
