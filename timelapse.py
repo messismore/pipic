@@ -199,11 +199,12 @@ class timelapse:
         """
         Take an additional under- and overexposed image.
         """
-        self.camera.exposure_compensation = -self.hdr
+        compensation = self.currentss * (self.hdr/100)
+        self.camera.shutter_speed = self.currentss - compensation
         imunder = self.capture()
-        self.camera.exposure_compensation = self.hdr
+        self.camera.shutter_speed = self.currentss + compensation
         imover = self.capture()
-        self.camera.exposure_compensation = 0
+        self.camera.shutter_speed = self.currentss
 
         images = (imunder, imover)
         return images
