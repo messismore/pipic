@@ -352,7 +352,7 @@ def main(argv):
     parser.add_argument('-d', '--delta', default=128, type=int, help='Maximum allowed distance of photo brightness from target brightness; discards photos too far from the target.  This is useful for autmatically discarding late-night shots.\nDefault is 128; Set to 256 to keep all images.' )
     parser.add_argument('-m', '--metering', default='a', type=str, choices=['a','c','l','r'], help='Where to average brightness for brightness calculations.\n"a" measures the whole image, "c" uses a window at the center, "l" meters a strip at the left, "r" uses a strip at the right.' )
     parser.add_argument('-I', '--iso', default=100, type=int, help='Set ISO.')
-    parser.add_argument('-c', '--colourbalance', nargs=2, default='auto',
+    parser.add_argument('-c', '--colourbalance', nargs=2, default='497/256' '177/128',
                         type=str, help='Set white balance as red and blue. '
                                        '''\nEg. \'493/256\' '387/256\' ''')
     parser.add_argument('-r', '--hdr', default=60, type=float,
