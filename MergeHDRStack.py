@@ -9,9 +9,3 @@ def MergeHDRStack(filenames, image_name=None):
     """
     call(['enfuse', '--output=%s' % (image_name), filenames[0], filenames[1], filenames[2]])
     return True
-
-filenames = ['/Users/Felix/Documents/Github/pipic/enfuse/normal.jpg',
-             '/Users/Felix/Documents/Github/pipic/enfuse/over.jpg',
-             '/Users/Felix/Documents/Github/pipic/enfuse/under.jpg']
-
-MergeHDRStack(filenames, 'Output.jpg')
