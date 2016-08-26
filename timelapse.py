@@ -284,8 +284,8 @@ class timelapse:
             MergeHDRStack(filenames, filename + '_HDR.jpg')
             try:
                 os.remove(filename + '_under.jpg', filename + '_over.jpg')
-            except:
-                print "Unable to delete work files!"
+            except OSError, e:
+                print ("Error: %s - %s." % (e.filename,e.strerror))
 
         if not ss_adjust: return None
 
