@@ -7,6 +7,7 @@ import time
 import io, picamera
 from fractions import Fraction
 from datetime import datetime
+from MergeHDRStack import MergeHDRStack
 
 class timelapse:
     """
@@ -275,6 +276,12 @@ class timelapse:
             filename = filename.replace('.jpg', '')
             ims[0].save(filename + '_under.jpg')
             ims[1].save(filename + '_over.jpg')
+
+            filenames = [filename + '.jpg',
+                         filename + '_under.jpg',
+                         filename + '_over.jpg']
+
+            MergeHDRStack(filenames, filename + '_HDR.jpg')
 
         if not ss_adjust: return None
 
