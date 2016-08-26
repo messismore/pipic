@@ -281,7 +281,7 @@ class timelapse:
                          filename + '_under.jpg',
                          filename + '_over.jpg']
 
-            MergeHDRStack(filenames, filename + '_HDRjpg')
+            MergeHDRStack(filenames, filename + '_HDR.jpg')
             for x in filenames[1:]:
                 try:
                     os.remove(x)
