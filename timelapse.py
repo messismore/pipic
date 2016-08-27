@@ -43,9 +43,9 @@ class timelapse:
         T=timelapse()
         T.listen()
     """
-    def __init__(self, w=1920, h=1080, interval=15, maxtime=0, maxshots=0,
+    def __init__(self, nodelete=False, w=1920, h=1080, interval=15, maxtime=0, maxshots=0,
                  targetBrightness=100, maxdelta=256, iso=100,
-                 colourbalance='133/64' '337/256', hdr=60, nodelete=False):
+                 colourbalance='133/64' '337/256', hdr=60):
         self.camera=picamera.PiCamera()
         self.camera.framerate = 10
 
