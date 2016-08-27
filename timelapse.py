@@ -63,7 +63,7 @@ class timelapse:
         # hdr can be set to an integer from 0 to 25. If > 0, two additional
         # pictures will be taken, with hdr as exposure compensation
         self.hdr=hdr
-        self.nodelete = False
+        self.nodelete = nodelete
 
         #metersite is one of 'c', 'a', 'l', or 'r', for center, all, left or right.
         #Chooses a region of the image to use for brightness measurements.
