@@ -346,6 +346,8 @@ def main(argv):
 
 
     parser = argparse.ArgumentParser(description='Timelapse tool for the Raspberry Pi.')
+    parser.add_argument('--nodelete', action='store_true', help='Do not delete'
+                        ' work files.')
     parser.add_argument('-W', '--width', default=1920, type=int, help='Set image width.' )
     parser.add_argument('-H', '--height', default=1080, type=int, help='Set image height.' )
     parser.add_argument('-i', '--interval', default=15, type=int, help='Set photo interval in seconds.  \nRecommended miniumum is 6.' )
@@ -362,15 +364,19 @@ def main(argv):
                         help='Take two additional images, one under-, one '
                                'overexposed. \n Set this from 1 to 25,'
                                'depending the desired difference in exposure')
-    parser.add_argument('--nodelete', action='store_true', help='do not delete'
-                        'work files')
+
 
     args=parser.parse_args()
-    TL = timelapse(w=args.width, h=args.height, interval=args.interval,
+    if args.nodelete:
+        nodelete = True
+    else:
+        nodelete = False
+
+    TL = timelapse(nodelete, w=args.width, h=args.height, interval=args.interval,
                    maxshots=args.maxshots, maxtime=args.maxtime,
                    targetBrightness=args.brightness, maxdelta=args.delta,
                    iso=args.iso, colourbalance=args.colourbalance,
-                   hdr=args.hdr, nodelete=args.nodelete)
+                   hdr=args.hdr)
 
     try:
         os.listdir('/media/Usb-Drive/Timelapse/')
