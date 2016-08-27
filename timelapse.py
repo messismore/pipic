@@ -45,7 +45,7 @@ class timelapse:
     """
     def __init__(self, w=1920, h=1080, interval=15, maxtime=0, maxshots=0,
                  targetBrightness=100, maxdelta=256, iso=100,
-                 colourbalance='auto', hdr=60):
+                 colourbalance='133/64' '337/256', hdr=60, nodelete=False):
         self.camera=picamera.PiCamera()
         self.camera.framerate = 10
 
@@ -63,6 +63,7 @@ class timelapse:
         # hdr can be set to an integer from 0 to 25. If > 0, two additional
         # pictures will be taken, with hdr as exposure compensation
         self.hdr=hdr
+        self.nodelete = False
 
         #metersite is one of 'c', 'a', 'l', or 'r', for center, all, left or right.
         #Chooses a region of the image to use for brightness measurements.
@@ -282,11 +283,13 @@ class timelapse:
                          filename + '_over.jpg']
 
             MergeHDRStack(filenames, filename + '_HDR.jpg')
-            for x in filenames[1:]:
-                try:
-                    os.remove(x)
-                except OSError, e:
-                    print ("Error: %s - %s." % (e.filename,e.strerror))
+            if self.nodelete is not True:
+                for x in filenames[1:]:
+                    try:
+                        os.remove(x)
+                    except OSError, e:
+                        print ("Error: %s - %s." % (e.filename,e.strerror))
+            filename = filename + '.jpg'
 
         if not ss_adjust: return None
 
@@ -359,13 +362,15 @@ def main(argv):
                         help='Take two additional images, one under-, one '
                                'overexposed. \n Set this from 1 to 25,'
                                'depending the desired difference in exposure')
+    parser.add_argument('--nodelete', action='store_true', help='do not delete'
+                        'work files')
 
     args=parser.parse_args()
     TL = timelapse(w=args.width, h=args.height, interval=args.interval,
                    maxshots=args.maxshots, maxtime=args.maxtime,
                    targetBrightness=args.brightness, maxdelta=args.delta,
                    iso=args.iso, colourbalance=args.colourbalance,
-                   hdr=args.hdr)
+                   hdr=args.hdr, nodelete=args.nodelete)
 
     try:
         os.listdir('/media/Usb-Drive/Timelapse/')
