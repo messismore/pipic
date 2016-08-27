@@ -223,7 +223,6 @@ class timelapse:
         and ISO for taking photos of the desired brightness.
         """
         killtoken=False
-        self.camera.resolution = (1920, 1080)
         while abs(self.targetBrightness-self.lastbr)>4:
             im=self.capture()
             self.lastbr=self.avgbrightness(im)
@@ -245,7 +244,6 @@ class timelapse:
                     break
                 else:
                     killtoken=True
-        self.camera.resolution = (self.w, self.h)
         return True
 
     def maxxedbrightness(self):
